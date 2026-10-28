@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="theme-color" content="#9b1c2e">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Acólitos Huambo">
+<title>Associação de Acólitos do Huambo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#eef1f4;--card:#fff;--ink:#1d2433;--mute:#5d6678;--line:#d5dae2;--ac:#9b1c2e}
+@media(prefers-color-scheme:dark){:root{--bg:#141923;--card:#1d2433;--ink:#eef0f4;--mute:#9aa3b5;--line:#333d52;--ac:#e0707f}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,serif}
+header,main,nav{max-width:760px;margin:0 auto;padding:0 16px}header{padding-top:18px}h1{font-size:1.35rem;margin:0}
+.mute,small{color:var(--mute)}nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-top:10px;overflow-x:auto}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;font:inherit;color:var(--mute);cursor:pointer}
+nav button.on{color:var(--ac);border-color:var(--ac);font-weight:700}main{padding:16px}[hidden]{display:none!important}
+form,.box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:8px;margin-bottom:14px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+input,select{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.p{background:var(--ac);color:var(--bg);border:0;border-radius:6px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}
+.x{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:4px 10px;font:inherit;cursor:pointer}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+li small{display:block}label.c{display:flex;gap:8px;align-items:center}label.c input{width:auto}
+fieldset{border:1px solid var(--line);border-radius:6px;display:flex;flex-wrap:wrap;gap:4px 14px}fieldset input{width:auto}
+#err{color:var(--ac);min-height:1.4em}
+#doc{position:fixed;inset:0;background:rgba(0,0,0,.65);overflow:auto;padding:12px}
+.bar2{display:flex;gap:8px;justify-content:center;margin-bottom:10px}
+.a4{width:210mm;height:296mm;background:#fff;color:#111;margin:0 auto;padding:12mm 16mm;border:2px solid #1f3a9a;display:flex;flex-direction:column;font-family:Georgia,serif;font-size:11pt}
+.a4.rec{height:200mm}.a4 small{color:#555}
+.hd{text-align:center;border-bottom:2px solid #1f3a9a;padding-bottom:4mm}.hd img{width:30mm;height:30mm;object-fit:contain}
+.t1{font-weight:700;letter-spacing:1px;font-size:13pt}.t2{font-weight:700;color:#1f3a9a;font-size:15pt}.t3{margin-top:3mm;font-size:14pt;letter-spacing:3px;font-weight:700}
+.top{display:flex;gap:8mm;align-items:center;margin:6mm 0}
+.ph{width:35mm;height:45mm;border:1px solid #888;display:grid;place-items:center;color:#888;font-size:9pt;flex:none;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover}
+.lb{color:#555;font-size:9pt;text-transform:uppercase}.n{font-size:26pt;font-weight:700;color:#9b1c2e;letter-spacing:2px}.a4 h2{margin:2mm 0 0;font-size:16pt}
+.tb .r{display:flex;justify-content:space-between;gap:8mm;border-bottom:1px solid #ccc;padding:2.2mm 0}.tb .r span{color:#555}.tb .r b{text-align:right}
+.dc{margin:6mm 0;font-style:italic;color:#333}
+.ft{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm}
+.qr small{display:block;font-size:8pt;max-width:48mm}#qr{width:112px;height:112px}
+.sg{text-align:center;min-width:70mm}.sg small{display:block}.ln{border-top:1px solid #111;margin:14mm 0 1mm}
+.pago{border:3px solid #2f6b4f;color:#2f6b4f;font-weight:700;font-size:20pt;padding:2mm 6mm;transform:rotate(-8deg);margin-left:auto}
+@page{size:A4;margin:0}
+@media print{body>*:not(#doc){display:none!important}#doc{position:static;background:none;padding:0;overflow:visible}.bar2{display:none}.a4{zoom:1!important;margin:0}}
+.sig{display:block;margin:0 auto -12px;height:15mm;position:relative}
+.hero{position:relative;border-radius:12px;overflow:hidden;color:#fff;min-height:170px;background:#123 center/cover;margin-bottom:14px}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(10,25,60,.45),rgba(10,25,60,.85))}.hero>*{position:relative}
+.hero .lg{display:flex;justify-content:space-between;align-items:center;padding:12px}.hero img.l{height:66px;background:#fff;border-radius:50%}.hero img.b{height:76px;background:#fff;border-radius:8px;padding:2px}
+.hero h2{margin:0;padding:0 12px 14px;font-size:1.05rem}
+.arc{display:flex!important;gap:12px;align-items:center}.arc img{width:84px;height:84px;object-fit:cover;border-radius:50%;border:3px solid var(--ac)}
+.al{border-color:var(--ac)}.ln2{display:flex;justify-content:space-between;gap:10px}
+.tb2{border-collapse:collapse;width:100%;min-width:640px}.tb2 th,.tb2 td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;font-size:.9rem}.tb2 th{background:var(--card)}
+.cor{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px solid #888}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}.gi{margin:0}.gi img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;cursor:pointer}.gi figcaption{font-size:.8rem}
+.nts{display:flex;gap:12px;margin:10px 0}.nt{flex:1;border-collapse:collapse;width:100%}.nt th,.nt td{border:1px solid #bbb;padding:5px 8px;font-size:11pt;color:#111;text-align:left}.nt th{background:#eef1fa}
+.mf{text-align:center;font-size:14pt;margin:8px 0;color:#111}.mans{display:flex;gap:24px;margin:26px 0 8px}.mans>div{flex:1;text-align:center;color:#111}
+.kp{display:flex;gap:8px;margin:10px 0}.kp>div{flex:1;border:1px solid #bbb;padding:8px;text-align:center;color:#111}.kp b{display:block;font-size:13pt;color:#9b1c2e}.a4 h4{margin:12px 0 4px;color:#111}
+.lk{display:block;text-align:center;text-decoration:none;padding:10px;border-radius:6px;background:var(--ac);color:var(--bg);font-weight:700}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script></head><body>
+<header><h1>Associação de Acólitos do Huambo</h1><div class="mute" id="who">Arquidiocese do Huambo</div></header>
+<div id="err" role="alert" style="max-width:760px;margin:0 auto;padding:0 16px">A carregar… Se esta mensagem não desaparecer, há um erro num dos ficheiros do app (Logo, Assinatura, Brasao, Se ou Arcebispo).</div>
+
+<main id="auth">
+<form onsubmit="return false" id="fl"><b>Entrar</b><input name="user" placeholder="Utilizador" autocomplete="username" required><input name="pass" type="password" placeholder="Palavra-passe" autocomplete="current-password" required><button class="p">Entrar</button><button type="button" class="x" id="toReg">Pedir acesso</button></form>
+<form onsubmit="return false" id="fr" hidden><b>Pedir acesso</b><input name="nome" placeholder="Nome completo" required><input name="user" placeholder="Escolha um utilizador" required><input name="pass" type="password" placeholder="Palavra-passe (6+ caracteres)" required>
+<select name="cargo" id="rc"><option>Coordenador paroquial</option><option>Coordenador de vigararia</option><option value="Membro">Membro de grupo (ver só os meus dados)</option></select><div class="row" id="rg"><select name="vig" id="rv"></select><select name="par" id="rp"></select></div><div class="row" id="rm" hidden><input name="codigo" placeholder="Código de membro (ex.: ICSC001)" autocapitalize="characters"><label>Data de nascimento<input name="nasc" type="date"></label></div><small>Os cargos da direcção arquidiocesana e de vigararia são atribuídos pelo administrador.</small><button class="p">Enviar pedido</button><button type="button" class="x" id="toLog">Já tenho acesso</button></form>
+</main>
+
+<div id="app" hidden>
+<nav id="tabs"></nav>
+<main>
+<section id="s-inicio"></section>
+<section id="s-prog" hidden>
+<div class="row"><select id="pt" aria-label="Período"><option>Mensal</option><option>Semestral</option><option>Anual</option></select><select id="pr" aria-label="Referência"></select></div><br>
+<form onsubmit="return false" id="fpg" hidden><b>Actividade do programa (só o administrador)</b><input type="hidden" name="pid"><input name="act" placeholder="Actividade" required><div class="row"><input name="data" type="date"><input name="local" placeholder="Local"></div><input name="part" placeholder="Participantes"><input name="obj" placeholder="Objectivos"><button class="p">Guardar</button></form>
+<div style="overflow-x:auto"><table class="tb2" id="tg"></table></div>
+</section>
+<section id="s-lit" hidden>
+<div class="row"><select id="ly" aria-label="Ano"></select><select id="lm2" aria-label="Mês"></select><select id="lt2" aria-label="Tempo litúrgico"></select></div><br>
+<form onsubmit="return false" id="flt" hidden><b>Calendário litúrgico (só o administrador)</b><div class="row"><input name="data" type="date" required><select name="cor"><option>Branco</option><option>Verde</option><option>Roxo</option><option>Vermelho</option><option>Rosa</option></select></div><input name="cel" placeholder="Celebração (ex.: festa do padroeiro)" required><select name="tipo"><option>Celebração</option><option>Solenidade</option><option>Festa</option><option>Memória</option><option>Dia especial</option></select><button class="p">Adicionar</button><button type="button" class="x" id="gl">Gerar o ano litúrgico completo</button></form>
+<ul id="ll"></ul>
+</section>
+<section id="s-gal" hidden><form onsubmit="return false" id="fgal" hidden><b>Adicionar foto (só o administrador)</b><input name="titulo" placeholder="Título / actividade" required><input name="foto" type="file" accept="image/*" required><button class="p">Adicionar foto</button></form><div class="gal" id="gg"></div></section>
+<section id="s-bib" hidden><form onsubmit="return false" id="fbib" hidden><b>Adicionar PDF (só o administrador)</b><input name="titulo" placeholder="Título" required><input name="cat" placeholder="Categoria (ex.: Formação, Estatutos)"><input name="pdf" type="file" accept="application/pdf" required><small>Máximo 4 MB por ficheiro.</small><button class="p">Adicionar PDF</button></form><ul id="lbib"></ul></section>
+<section id="s-form" hidden><form onsubmit="return false" id="fnt"><b>Registar notas da formação</b><select id="fmm" name="codigo" required></select><div id="fng" class="row"></div><label>Data de conclusão<input name="conclusao" type="date" required></label><small>Média final = soma das 9 notas ÷ 9, arredondada ao número inteiro. Aprovação a partir de <span id="fmin">10</span> valores. Depois de guardado, o certificado aguarda a autorização do administrador ou do coordenador arquidiocesano.</small><button class="p">Guardar notas</button></form><ul id="lfo"></ul></section>
+<section id="s-acs" hidden><b>Acessos e perfis</b><small>Defina o cargo, o estado e o âmbito de cada pessoa. As alterações aplicam-se no próximo login dessa pessoa.</small><ul id="lac"></ul></section>
+<section id="s-rel" hidden><form onsubmit="return false" id="frl"><b>Relatório automático</b><select name="tipo"><option value="membros">Membros</option><option value="quotas">Quotas</option><option value="actividades">Actividades</option><option value="formacao">Formação</option></select><div class="row"><select name="ano" id="rano"></select><select name="mes" id="rmes"></select></div><fieldset id="rsg"></fieldset><button class="p">Gerar relatório</button></form></section>
+<section id="s-membros">
+<form onsubmit="return false" id="fm"><b>Novo cadastro</b>
+<div class="row"><input name="nome" placeholder="Nome completo" required><input name="contacto" placeholder="Contacto (telefone)" required></div>
+<input name="bi" placeholder="Nº do Bilhete de Identidade (BI) — evita membros repetidos" required autocomplete="off">
+<div class="row"><label>Data de nascimento<input name="nasc" type="date" required></label><label>Data de ingresso no grupo<input name="ingresso" type="date" required></label></div>
+<div class="row"><select name="genero" required><option value="">Género</option><option>Masculino</option><option>Feminino</option></select><select name="tipo"><option>Membro de grupo paroquial</option><option>Coordenador paroquial</option><option>Dirigente arquidiocesano</option></select></div>
+<div class="row"><select name="vig" id="mv"></select><select name="par" id="mp"></select></div>
+<fieldset><legend>Sacramentos</legend><label><input type="checkbox" name="sac" value="Baptismo"> Baptismo</label><label><input type="checkbox" name="sac" value="Comunhão"> Comunhão</label><label><input type="checkbox" name="sac" value="Crisma"> Crisma</label></fieldset>
+<label>Fotografia tipo passe — obrigatória<input name="foto" type="file" accept="image/*" required></label>
+<button class="p">Cadastrar e gerar ficha</button></form>
+<input id="q" placeholder="Pesquisar por nome, código ou paróquia"><br><br><ul id="lm"></ul>
+</section>
+
+<section id="s-insc" hidden>
+<form onsubmit="return false" id="fa"><b>Nova actividade</b><input name="titulo" placeholder="Título" required><div class="row"><input name="data" type="date" required><input name="local" placeholder="Local"></div><button class="p">Criar actividade</button></form>
+<div class="box"><select id="act"></select><input id="qi" placeholder="Pesquisar membro"><div id="li" style="display:grid;gap:6px;max-height:340px;overflow:auto"></div><button class="p" id="go">Inscrever seleccionados</button><small id="cnt"></small></div>
+<div class="box" id="pres"></div>
+</section>
+
+<section id="s-quotas" hidden>
+<form onsubmit="return false" id="fq"><b>Registar quota</b><select name="tipo" id="qt"><option>Individual</option><option>Colectiva</option></select><select name="codigo" id="qc"></select>
+<div class="row" id="qg"><select name="vig" id="qv"></select><select name="par" id="qpp"></select></div>
+<div class="row"><input name="valor" type="number" min="0" step="any" placeholder="Valor (Kz)" required><input name="mes" type="month" required></div><label>Comprovativo de pagamento (PDF ou imagem) — obrigatório<input name="comp" type="file" accept="image/*,application/pdf" required></label><small>O recibo só é emitido depois de o administrador confirmar o pagamento.</small><button class="p">Registar quota</button></form>
+<form onsubmit="return false" id="fs" hidden><b>Assinaturas</b><small>Aparecem nos recibos, nas fichas e nos relatórios. Para trocar a assinatura do coordenador arquidiocesano, registe de novo com o cargo «Coordenador Arquidiocesano». Subcomissões: um registo por pessoa, ex.: «Subcomissão de Liturgia — Responsável» e «… — Vice». Só o administrador altera.</small><input name="cargo" list="cargos" placeholder="Cargo" required><datalist id="cargos"><option>Coordenador Arquidiocesano</option><option>Tesoureiro</option><option>Secretário</option></datalist><input name="nome" placeholder="Nome da pessoa" required><label>Imagem da assinatura<input name="img" type="file" accept="image/*" required></label><button class="p">Guardar assinatura</button></form>
+<ul id="lsg"></ul>
+<input type="file" id="phf" accept="image/*" hidden>
+<ul id="lq"></ul>
+</section>
+</main>
+<main><button class="x" id="out">Sair</button></main>
+</div>
+
+<div id="doc" hidden></div>
+
+<script src="imgs.js"></script>
+<script>window.onerror=function(m,u,l){var e=document.getElementById("err");if(e)e.textContent="Erro no app: "+m+" (linha "+l+")"}</script>
+<script>
+// >>> COLE AQUI o URL da sua implantação do Apps Script (termina em /exec)
+const API_URL="https://script.google.com/macros/s/AKfycbxbZsQXmMGzkE8u3nKRd4Fg2wc9-PHwH6qVRf5X7Iyd1J8fXRjA3v_v-_k2OFj9uHc/exec";
+const LOGO=IMGS.logo,IMG={b:IMGS.b,s:IMGS.s,a:IMGS.a};let SIGC="";
+const APROV=["Administrador","Tesoureiro","Coordenador arquidiocesano","Secretário"];
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let T=null,ME=null,D={pars:[],M:[],Q:[],A:[],I:[],Prog:[],Lit:[],atr:[],F:[],cfg:{T:[],P:[],min:10},hoje:{}},tab="inicio";
+const rpc=async body=>{
+  if(API_URL.indexOf("https://")!==0)throw new Error("Falta colar o URL do Apps Script no ficheiro index.html (API_URL).");
+  let d;
+  try{const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)});d=await r.json()}
+  catch(e){throw new Error("Sem ligação ao servidor. Verifique a internet e tente de novo.")}
+  if(!d.ok)throw new Error(d.e||"Erro no servidor.");return d.r};
+const call=(fn,a)=>rpc({t:T,fn,a});
+const srv=(f,...a)=>rpc({op:f,a});
+const err=e=>{$("#err").textContent=(e&&e.message||e||"").replace(/^Error: /,"");setTimeout(()=>$("#err").textContent="",6000)};
+const opt=a=>a.map(x=>`<option>${esc(x)}</option>`).join("");
+const vigs=()=>[...new Set(D.pars.map(p=>p.v))];
+function geo(v,p){v.innerHTML=opt(vigs());const f=()=>p.innerHTML=opt(D.pars.filter(x=>x.v===v.value).map(x=>x.p));v.onchange=f;f()}
+
+$("#toReg").onclick=async()=>{$("#fl").hidden=true;$("#fr").hidden=false;if($("#rv").children.length)return;try{const P=await srv("paroquias");$("#rv").innerHTML=opt(Object.keys(P));const f=()=>$("#rp").innerHTML=opt(P[$("#rv").value]);$("#rv").onchange=f;f()}catch(x){err(x)}};
+$("#toLog").onclick=()=>{$("#fr").hidden=true;$("#fl").hidden=false};
+$("#fl").onsubmit=async e=>{e.preventDefault();const f=e.target;try{const r=await srv("entrar",f.user.value,f.pass.value);T=r.t;ME=r.me;rpc({op:"assinatura",t:T}).then(s=>{SIGC=s}).catch(()=>{});await load();$("#auth").hidden=true;$("#app").hidden=false;$("#who").textContent=`${ME.nome} · ${ME.role}${ME.vig?" · "+ME.vig:""}${ME.par?" · "+ME.par:""}`;setup();draw()}catch(x){err(x)}};
+$("#fr").onsubmit=async e=>{e.preventDefault();const o=Object.fromEntries(new FormData(e.target));try{alert(await srv("pedir",o));e.target.reset();$("#toLog").click()}catch(x){err(x)}};
+$("#out").onclick=()=>location.reload();
+
+async function load(){D=await call("lista")}
+function setup(){
+ geo($("#mv"),$("#mp"));geo($("#qv"),$("#qpp"));
+ $("#tabs").innerHTML=[["inicio","Início"],["membros","Membros"],["insc","Inscrições"],["quotas","Quotas"],["prog","Programa"],["lit","Liturgia"],["gal","Galeria"],["bib","Biblioteca"],["form","Formação"],["rel","Relatórios"]].map(([k,n])=>`<button data-k="${k}" class="${k===tab?"on":""}">${n}</button>`).join("");
+}
+$("#tabs").onclick=e=>{if(e.target.dataset.k){tab=e.target.dataset.k;setup();draw()}};
+function draw(){$("#fs").hidden=ME.role!=="Administrador";
+ ["inicio","membros","insc","quotas","prog","lit","gal","bib","form","rel"].forEach(k=>$("#s-"+k).hidden=k!==tab);
+ const q=$("#q").value.toLowerCase();
+ $("#lm").innerHTML=D.M.filter(m=>(m["Código"]+m["Nome"]+m["Paróquia"]).toLowerCase().includes(q)).map(m=>`<li><div><b>${esc(m["Código"])}</b> ${esc(m["Nome"])}<small>${esc(m["Tipo"])} · ${esc(m["Paróquia"])}</small></div>${m["TemFoto"]?`<button class="x" data-f="${esc(m["Código"])}">Ficha</button>`:`<button class="x" data-ph="${esc(m["Código"])}">Adicionar foto</button>`}</li>`).join("")||'<li class="mute">Nenhum membro.</li>';
+ $("#act").innerHTML=D.A.map(a=>`<option value="${a.ID}">${esc(a["Título"])} (${esc(a["Data"])})</option>`).join("")||"<option value=''>Sem actividades</option>";
+ drawIns();
+ const ind=$("#qt").value==="Individual";$("#qc").hidden=!ind;$("#qg").hidden=ind;
+ $("#qc").innerHTML=D.M.filter(m=>m["Tipo"]!=="Membro de grupo paroquial").map(m=>`<option value="${esc(m["Código"])}">${esc(m["Código"])} — ${esc(m["Nome"])}</option>`).join("");
+ $("#lq").innerHTML=D.Q.map(x=>{const st=x["Estado"]||"Registo antigo, sem comprovativo",adm=ME.role==="Administrador";return `<li><div>${esc(x["Nome / Paróquia"])}<small>${esc(x["Tipo"])} · ${esc(String(x["Mês"]).slice(0,7))} · <b>${esc(st)}</b></small></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><b>${Number(x["Valor (Kz)"]).toLocaleString("pt-PT")} Kz</b>${x["Estado"]?`<button class="x" data-c="${x.ID}">Comprovativo</button>`:""}${st==="Aprovado"?`<button class="x" data-r="${x.ID}">Recibo</button>`:""}${APROV.includes(ME.role)&&st==="Pendente"?`<button class="p" data-ok="${x.ID}">Aprovar</button><button class="x" data-no="${x.ID}">Rejeitar</button>`:""}</div></li>`}).join("")||'<li class="mute">Sem quotas.</li>';
+}
+function drawIns(){
+ const id=$("#act").value,have=new Set(D.I.filter(i=>i["ID actividade"]===id).map(i=>i["Código"])),q=$("#qi").value.toLowerCase();
+ $("#li").innerHTML=D.M.filter(m=>(m["Código"]+m["Nome"]).toLowerCase().includes(q)).map(m=>`<label class="c"><input type="checkbox" value="${esc(m["Código"])}" ${have.has(m["Código"])?"checked disabled":""}> ${esc(m["Código"])} — ${esc(m["Nome"])}${have.has(m["Código"])?" <small>(inscrito)</small>":""}</label>`).join("");
+ $("#cnt").textContent=`${have.size} inscritos nesta actividade`;
+}
+$("#act").onchange=drawIns;$("#qi").oninput=drawIns;$("#q").oninput=draw;$("#qt").onchange=draw;
+$("#go").onclick=async()=>{const c=[...document.querySelectorAll("#li input:checked:not(:disabled)")].map(i=>i.value);if(!c.length)return;try{await call("inscrever",{id:$("#act").value,codigos:c});await load();draw()}catch(x){err(x)}};
+$("#fa").onsubmit=async e=>{e.preventDefault();try{await call("actividade",Object.fromEntries(new FormData(e.target)));e.target.reset();await load();draw()}catch(x){err(x)}};
+$("#fq").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),o=Object.fromEntries(f),file=f.get("comp");
+ if(!file||!file.size){err("Anexe o comprovativo de pagamento.");return}
+ try{o.comp=file.type==="application/pdf"?await new Promise((ok,ko)=>{if(file.size>4e6)return ko(new Error("PDF demasiado grande (máx. 4 MB)."));const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>ko(new Error("Falha ao ler o ficheiro."));r.readAsDataURL(file)}):await small(file,1400);
+ if(!o.comp)throw new Error("Anexe uma imagem ou um PDF.");
+ await call("quota",o);e.target.reset();await load();setup();draw();alert("Quota registada. Aguarda a confirmação do administrador.")}catch(x){err(x)}};
+const small=(f,M=400)=>new Promise(r=>{if(!f||!f.size)return r("");const i=new Image();i.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,M/Math.max(i.width,i.height));c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.8))};i.onerror=()=>r("");i.src=URL.createObjectURL(f)});
+$("#fm").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),o=Object.fromEntries(f);o.sac=f.getAll("sac");o.foto=await small(f.get("foto"));try{const c=await call("cadastrar",o);e.target.reset();await load();setup();draw();ficha(c)}catch(x){err(x)}};
+const dm=d=>String(d||"").slice(0,10).split("-").reverse().join("/");
+const idade=d=>{const n=new Date(d+"T00:00");if(isNaN(n))return"";const h=new Date();let a=h.getFullYear()-n.getFullYear();if(h<new Date(h.getFullYear(),n.getMonth(),n.getDate()))a--;return a};
+function doc(inner){const W=$("#doc");W.innerHTML=`<div class="bar2"><button class="p" onclick="print()">Imprimir / guardar PDF</button><button class="x" onclick="$('#doc').hidden=true">Fechar</button></div>${inner}`;W.hidden=false;const a=W.querySelector(".a4");if(a)a.style.zoom=Math.min(1,(innerWidth-24)/794)}
+const head=t=>`<div class="hd"><img src="${LOGO}" alt="Logotipo"><div class="t1">ARQUIDIOCESE DO HUAMBO</div><div class="t2">ASSOCIAÇÃO ARQUIDIOCESANA DE ACÓLITOS</div><div class="t3">${t}</div></div>`;
+const qrBlock=()=>`<div class="qr"><div id="qr"></div><small>Código de segurança.<br>Leia para verificar a autenticidade.</small></div>`;
+const mkqr=u=>{try{new QRCode($("#qr"),{text:u,width:112,height:112})}catch(e){$("#qr").textContent="Verificação: "+u}};
+const row=(a,b)=>`<div class="r"><span>${a}</span><b>${esc(b||"—")}</b></div>`;
+async function ficha(c){try{const r=await call("ficha",{codigo:c}),m=r.m;
+ doc(`<div class="a4">${head("FICHA DE ACÓLITO")}
+ <div class="top"><div class="ph">${r.foto?`<img src="${r.foto}" alt="Fotografia">`:"Fotografia"}</div><div><div class="lb">Nº de membro</div><div class="n">${esc(m["Código"])}</div><h2>${esc(m["Nome"])}</h2></div></div>
+ <div class="tb">${row("Data de nascimento",dm(m["Nascimento"])+" ("+idade(m["Nascimento"])+" anos)")}${row("Género",m["Género"])}${row("Contacto",m["Contacto"])}${row("Tipo de membro",m["Tipo"])}${row("Vigararia",m["Vigararia"])}${row("Paróquia",m["Paróquia"])}${row("Data de ingresso no grupo",dm(m["Ingresso"]))}${row("Sacramentos",m["Sacramentos"])}</div>
+ <p class="dc">Declara-se que o(a) acólito(a) acima identificado(a) é membro da Associação Arquidiocesana de Acólitos do Huambo.</p>
+ <div class="ft">${qrBlock()}<div class="sg"><small>Emitida em ${dm(new Date().toISOString())}</small><img class="sig" src="${SIGC}" alt="Assinatura"><div class="ln"></div><b>Américo Tomás Candundo</b><small>Coordenador Arquidiocesano</small></div></div></div>`);mkqr(r.qr)}catch(x){err(x)}}
+async function recibo(id){try{const r=await call("recibo",{id}),q=r.q;
+ doc(`<div class="a4 rec">${head("RECIBO DE QUOTA")}
+ <div class="top"><div><div class="lb">Recibo Nº</div><div class="n">${esc(q["Recibo"])}</div></div><div class="pago">PAGO</div></div>
+ <div class="tb">${row("Recebido de",q["Nome / Paróquia"])}${q["Código"]?row("Nº de membro",q["Código"]):""}${row("Tipo de quota",q["Tipo"])}${row("Paróquia / Vigararia",(q["Paróquia"]||"")+" / "+q["Vigararia"])}${row("Referente ao mês",String(q["Mês"]).slice(0,7))}${row("Valor",Number(q["Valor (Kz)"]).toLocaleString("pt-PT")+" Kz")}${row("Pagamento confirmado por",q["Aprovado por"]+" em "+dm(q["Aprovado em"]))}</div>
+ <div class="ft">${qrBlock()}<div class="sg"><img class="sig" src="${r.sig}" alt="Assinatura"><div class="ln"></div><b>${esc(r.tes)}</b><small>Tesoureiro — Associação Arquidiocesana de Acólitos</small></div></div></div>`);mkqr(r.qr)}catch(x){err(x)}}
+async function comp(id){try{const r=await call("comprovativo",{id});
+ if(r.mime==="application/pdf"){const b=atob(r.b64),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);const url=URL.createObjectURL(new Blob([u],{type:"application/pdf"}));doc(`<div class="box" style="max-width:420px;margin:auto"><b>Comprovativo (PDF)</b><a class="p" style="text-align:center;text-decoration:none" href="${url}" target="_blank" download="comprovativo.pdf">Abrir / descarregar PDF</a></div>`)}
+ else doc(`<img src="data:${r.mime};base64,${r.b64}" style="max-width:100%;display:block;margin:auto;background:#fff" alt="Comprovativo">`)}catch(x){err(x)}}
+document.addEventListener("click",async e=>{const d=e.target.dataset;
+ if(d.f)ficha(d.f);if(d.r)recibo(d.r);if(d.c)comp(d.c);
+ if(d.ok||d.no){if(!confirm(d.ok?"Confirma que este valor já está na conta da associação? Será gerado o recibo.":"Rejeitar este pagamento?"))return;try{await call("decidir",{id:d.ok||d.no,acao:d.ok?"aprovar":"rejeitar"});await load();draw()}catch(x){err(x)}}});
+const pngSmall=f=>new Promise(r=>{if(!f||!f.size)return r("");const i=new Image();i.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,500/Math.max(i.width,i.height));c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);r(c.toDataURL("image/png"))};i.src=URL.createObjectURL(f)});
+$("#fs").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);try{await call("assinatura",{cargo:f.get("cargo"),nome:f.get("nome"),img:await pngSmall(f.get("img"))});e.target.reset();alert("Assinatura guardada.")}catch(x){err(x)}};
+let phCode="";document.addEventListener("click",e=>{if(e.target.dataset.ph){phCode=e.target.dataset.ph;$("#phf").click()}});
+$("#phf").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{await call("foto",{codigo:phCode,foto:await small(f)});await load();draw()}catch(x){err(x)}};
+const MES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const COR={Roxo:"#6b3fa0",Branco:"#f4f4f4",Vermelho:"#c0392b",Verde:"#2e7d32",Rosa:"#e58bb0"};
+const pad2=n=>String(n).padStart(2,"0");
+function home(){
+ const h=new Date(),h0=new Date(h.getFullYear(),h.getMonth(),h.getDate()),dias=d=>Math.round((new Date(String(d).slice(0,10)+"T00:00")-h0)/864e5);
+ const cd=n=>n===0?"Hoje":n===1?"Amanhã":`Faltam ${n} dias`;
+ const pr=D.A.filter(a=>a["Data"]&&dias(a["Data"])>=0).sort((a,b)=>String(a["Data"])<String(b["Data"])?-1:1);
+ const sem=pr.filter(a=>dias(a["Data"])<=7),mes=pad2(h.getMonth()+1);
+ const an=D.M.filter(m=>String(m["Nascimento"]).slice(5,7)===mes).sort((a,b)=>String(a["Nascimento"]).slice(8,10)-String(b["Nascimento"]).slice(8,10));
+ const at=D.atr||[];
+ $("#s-inicio").innerHTML=`<div class="hero" style="background-image:url('${IMG.s}')"><div class="lg"><img class="l" src="${LOGO}" alt="Logotipo"><img class="b" src="${IMG.b}" alt="Brasão da Arquidiocese"></div><h2>Arquidiocese do Huambo<br>Associação Arquidiocesana de Acólitos</h2></div>
+ ${IMG.b?"":`<div class="box al"><small>As imagens da página inicial não foram carregadas. Confirme que os ficheiros Brasao, Se e Arcebispo têm o conteúdo completo.</small></div>`}<div class="box arc"><img src="${IMG.a||""}" alt="Arcebispo"><div><small>Arcebispo Metropolita do Huambo</small><br><b>Dom Zeferino Zeca Martins</b></div></div>
+ ${sem.length?`<div class="box al"><b>⏰ Actividades desta semana</b>${sem.map(a=>`<div class="ln2"><span>${esc(a["Título"])} — ${dm(a["Data"])}${a["Local"]?" · "+esc(a["Local"]):""}</span><b>${cd(dias(a["Data"]))}</b></div>`).join("")}</div>`:""}
+ <div class="box"><b>Próxima actividade</b>${pr.length?`<div class="ln2"><span>${esc(pr[0]["Título"])} — ${dm(pr[0]["Data"])}</span><b>${cd(dias(pr[0]["Data"]))}</b></div>`:'<small>Sem actividades marcadas.</small>'}</div>
+ <div class="box"><b>🎂 Aniversariantes de ${MES[h.getMonth()]}</b>${an.length?an.map(m=>`<div class="ln2"><span>${esc(m["Nome"])}</span><b>${String(m["Nascimento"]).slice(8,10)}/${mes}</b></div>`).join(""):'<small>Nenhum aniversariante este mês.</small>'}</div>
+ <div class="box ${at.length?"al":""}"><b>💰 Quotas em atraso (${at.length})</b>${at.length?at.slice(0,40).map(x=>`<div class="ln2"><span>${esc(x.nome)}<small> · ${x.tipo}</small></span><b>${x.meses.length} ${x.meses.length>1?"meses":"mês"}</b></div><small>${x.meses.join(", ")}</small>`).join(""):'<small>Sem quotas em atraso.</small>'}</div>`;
+}
+function progRef(){
+ const t=$("#pt").value,y=new Date().getFullYear(),m=new Date().getMonth(),o=[];let sel;
+ if(t==="Mensal"){for(let yy=y;yy<=y+1;yy++)for(let i=0;i<12;i++)o.push([yy+"-"+pad2(i+1),MES[i]+" de "+yy]);sel=y+"-"+pad2(m+1)}
+ else if(t==="Semestral"){for(let yy=y-1;yy<=y+1;yy++){o.push([yy+"-S1","1.º semestre de "+yy]);o.push([yy+"-S2","2.º semestre de "+yy])}sel=y+(m<6?"-S1":"-S2")}
+ else{for(let yy=y-1;yy<=y+1;yy++)o.push([String(yy),String(yy)]);sel=String(y)}
+ const pr=$("#pr"),cur=pr.dataset.t===t?pr.value:sel;
+ pr.innerHTML=o.map(([v,l])=>`<option value="${v}">${l}</option>`).join("");pr.value=cur;pr.dataset.t=t;
+}
+function prog(){
+ progRef();const t=$("#pt").value,r=$("#pr").value,adm=ME.role==="Administrador";$("#fpg").hidden=!adm;
+ const L=D.Prog.filter(p=>p["Período"]===t&&String(p["Referência"]).slice(0,r.length)===r).sort((a,b)=>String(a["Data"])<String(b["Data"])?-1:1);
+ $("#tg").innerHTML=`<tr><th>Actividade</th><th>Data</th><th>Local</th><th>Participantes</th><th>Objectivos</th>${adm?"<th></th>":""}</tr>`+(L.map(p=>`<tr><td>${esc(p["Actividade"])}</td><td>${dm(p["Data"])}</td><td>${esc(p["Local"])}</td><td>${esc(p["Participantes"])}</td><td>${esc(p["Objectivos"])}</td>${adm?`<td><button class="x" data-pe="${p.ID}">Editar</button> <button class="x" data-pd="${p.ID}">Apagar</button></td>`:""}</tr>`).join("")||'<tr><td colspan="6" class="mute">Sem actividades neste programa.</td></tr>');
+}
+function lit(){
+ const y0=new Date().getFullYear(),ly=$("#ly");
+ if(!ly.children.length){ly.innerHTML=[y0-1,y0,y0+1].map(y=>`<option>${y}</option>`).join("");ly.value=y0;$("#lm2").innerHTML='<option value="">Todos os meses</option>'+MES.map((m,i)=>`<option value="${pad2(i+1)}">${m}</option>`).join("");$("#lm2").value=pad2(new Date().getMonth()+1)}
+ const adm=ME.role==="Administrador";$("#flt").hidden=!adm;
+ const y=ly.value,m=$("#lm2").value;
+ const L=D.Lit.filter(x=>String(x["Data"]).slice(0,4)===y&&(!m||String(x["Data"]).slice(5,7)===m)).sort((a,b)=>String(a["Data"])<String(b["Data"])?-1:1);
+ $("#ll").innerHTML=L.map(x=>`<li><div><span class="cor" style="background:${COR[x["Cor"]]||"#999"}"></span> <b>${dm(x["Data"])}</b> ${esc(x["Celebração"])}<small>Cor litúrgica: ${esc(x["Cor"])}</small></div>${adm?`<button class="x" data-ld="${x.ID}">Apagar</button>`:""}</li>`).join("")||'<li class="mute">Sem celebrações neste período.'+(adm?" Use «Gerar as principais celebrações do ano».":"")+"</li>";
+}
+$("#pt").onchange=prog;$("#pr").onchange=prog;$("#ly").onchange=lit;$("#lm2").onchange=lit;
+$("#fpg").onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));try{await call("programa",{id:f.pid,act:f.act,data:f.data,local:f.local,part:f.part,obj:f.obj,per:$("#pt").value,ref:$("#pr").value});e.target.reset();await load();draw()}catch(x){err(x)}};
+$("#flt").onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));try{await call("lit",f);e.target.reset();await load();draw()}catch(x){err(x)}};
+$("#gl").onclick=async()=>{try{const n=await call("gerarLit",{ano:$("#ly").value});await load();draw();alert(n+" celebrações adicionadas. Confira com o calendário oficial e corrija o que for preciso.")}catch(x){err(x)}};
+document.addEventListener("click",async e=>{const d=e.target.dataset,f=$("#fpg").elements;
+ if(d.pe){const p=D.Prog.find(x=>x.ID===d.pe);f.pid.value=p.ID;f.act.value=p["Actividade"];f.data.value=String(p["Data"]).slice(0,10);f.local.value=p["Local"];f.part.value=p["Participantes"];f.obj.value=p["Objectivos"];$("#fpg").scrollIntoView()}
+ if(d.pd&&confirm("Apagar esta linha do programa?")){try{await call("progdel",{id:d.pd});await load();draw()}catch(x){err(x)}}
+ if(d.ld&&confirm("Apagar esta celebração?")){try{await call("litdel",{id:d.ld});await load();draw()}catch(x){err(x)}}
+});
+let GAL=[],BIB=[],galLoaded=false,presId="";
+const rd=f=>new Promise((ok,ko)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=ko;r.readAsDataURL(f)});
+async function galLoad(){try{GAL=await call("galeria");BIB=await call("bib");drawGal()}catch(x){err(x)}}
+function drawGal(){
+ const adm=ME.role==="Administrador";$("#fgal").hidden=!adm;$("#fbib").hidden=!adm;
+ $("#gg").innerHTML=GAL.map(g=>`<figure class="gi"><img src="${g.m}" alt="${esc(g.t)}" data-gi="${g.ID}"><figcaption>${esc(g.t)}${adm?` <button class="x" data-gd="${g.ID}">Apagar</button>`:""}</figcaption></figure>`).join("")||'<p class="mute">Ainda não há fotos.</p>';
+ $("#lbib").innerHTML=BIB.map(b=>`<li><div>${esc(b.t)}<small>${esc(b.c||"")} · ${dm(b.d)}</small></div><div><button class="p" data-bo="${b.ID}">Abrir</button> <button class="x" data-bd="${b.ID}" data-nm="${esc(b.n)}">Baixar</button>${adm?` <button class="x" data-bx="${b.ID}">Apagar</button>`:""}</div></li>`).join("")||'<li class="mute">Ainda não há documentos.</li>';
+}
+async function bibOpen(id,dl,nm){try{const u=await call("bibGet",{id}),b=URL.createObjectURL(await(await fetch(u)).blob());
+ if(dl){const a=document.createElement("a");a.href=b;a.download=nm||"documento.pdf";document.body.appendChild(a);a.click();a.remove()}
+ else doc(`<p class="mute">Se o documento não aparecer, toque em «Baixar».</p><iframe src="${b}" style="width:100%;height:78vh;border:0;background:#fff"></iframe>`)}catch(x){err(x)}}
+async function presLoad(){const id=$("#act").value;if(!id){$("#pres").innerHTML="";return}
+ try{const r=await call("presencas",{id});$("#pres").innerHTML=`<b>Presença por QR</b><small>No dia da actividade, mostre este código. Cada membro lê o código, escreve o seu código de membro e a data de nascimento.</small><div id="qrp" style="background:#fff;padding:8px;width:max-content;margin:0 auto"></div><div class="ln2"><small>${r.lista.length} presentes</small><button class="x" data-pr="1">Actualizar</button></div>${r.lista.map(p=>`<div class="ln2"><span>${esc(p.n)}</span><small>${esc(p.c)}</small></div>`).join("")}`;
+ try{new QRCode($("#qrp"),{text:r.url,width:160,height:160})}catch(e){$("#qrp").textContent=r.url}}catch(x){err(x)}}
+function formDraw(){
+ const c=D.cfg||{T:[],P:[],min:10};
+ if(!$("#fng").children.length&&c.T.length){$("#fng").innerHTML=[...c.T,...c.P].map((n,i)=>`<label>${esc(n)}<input name="g${i}" type="number" min="0" max="20" step="0.1" required></label>`).join("");$("#fmin").textContent=c.min}
+ const sel=$("#fmm"),v=sel.value;sel.innerHTML=D.M.map(m=>`<option value="${esc(m["Código"])}">${esc(m["Código"])} — ${esc(m["Nome"])}</option>`).join("");sel.value=v;
+ $("#lfo").innerHTML=D.F.map(f=>`<li style="flex-wrap:wrap"><div>${esc(f["Nome"])}<small>${esc(f["Código"])} · ${esc(f["Paróquia"])}<br>Média ${Math.round(Number(f["Média"]))} · ${esc(f["Resultado"])} · <b>${esc(f["Estado"])}</b>${f["Certificado"]?" · "+esc(f["Certificado"]):""}</small></div><div>${f["Estado"]==="Pendente"&&c.aut?`<button class="p" data-fa="${f.ID}">Autorizar</button> <button class="x" data-fr="${f.ID}">Rejeitar</button>`:""}${f["Estado"]==="Autorizado"?`<button class="p" data-fc="${f.ID}">Certificado</button>`:""}</div></li>`).join("")||'<li class="mute">Sem registos de formação.</li>';
+}
+async function certificado(id){try{const r=await call("certificado",{id}),c=r.c,T=D.cfg.T,P=D.cfg.P,m=Number(c["Média"]).toFixed(2);
+ const nt=(t,ns,k)=>`<table class="nt"><tr><th colspan="2">${t}</th></tr>${ns.map((n,i)=>`<tr><td>${esc(n)}</td><td>${Number(c[k+(i+1)]).toFixed(1)}</td></tr>`).join("")}</table>`;
+ doc(`<div class="a4">${head("CERTIFICADO DE FORMAÇÃO DE ACÓLITOS")}
+ <p class="dc">Certificamos que <b>${esc(c["Nome"])}</b>, membro nº <b>${esc(c["Código"])}</b>, da paróquia ${esc(c["Paróquia"])} (Vigararia ${esc(c["Vigararia"])}), concluiu em ${dm(c["Conclusão"])} a formação de acólitos, nas suas fases teórica e prática, com a média final de <b>${m}</b> valores (escala de 0 a 20), tendo sido considerado(a) <b>APROVADO(A)</b>.</p>
+ <div class="nts">${nt("Fase teórica",T,"T")}${nt("Fase prática",P,"P")}</div><div class="mf">Média final: <b>${m}</b> / 20</div>
+ <div class="mans"><div><div class="ln"></div><small>Pároco / Reitor</small></div><div><div class="ln"></div><small>Coordenador Paroquial</small></div></div>
+ <div class="ft">${qrBlock()}<div class="sg"><small>Certificado Nº ${esc(c["Certificado"])}</small><img class="sig" src="${SIGC}" alt="Assinatura"><div class="ln"></div><b>Américo Tomás Candundo</b><small>Coordenador Arquidiocesano</small></div></div></div>`);mkqr(r.qr)}catch(x){err(x)}}
+const sigBlock=(g,r)=>g?`<div><img class="sig" src="${g.img}" alt="Assinatura"><div class="ln"></div><b>${esc(g.nome)}</b><small>${r}</small></div>`:`<div><div class="ln"></div><small>${r}</small></div>`;
+async function relatorio(a){try{const r=await call("relatorio",a);
+ doc(`<div class="a4">${head(r.titulo)}<div class="dc" style="text-align:center">${esc(r.ambito)} · Período: ${esc(r.periodo)}</div>
+ <div class="kp">${r.kpis.map(k=>`<div><b>${esc(k[1])}</b><small>${esc(k[0])}</small></div>`).join("")}</div>
+ ${r.tabelas.map(t=>`<h4>${esc(t.h)}</h4><table class="nt"><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>${t.rows.map(x=>`<tr>${x.map(v=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")||`<tr><td colspan="${t.cols.length}">Sem dados.</td></tr>`}</table>`).join("")}
+ <div class="mans" style="margin-top:auto">${sigBlock(r.sig,r.resp)}<div><img class="sig" src="${SIGC}" alt="Assinatura"><div class="ln"></div><b>Américo Tomás Candundo</b><small>Coordenador Arquidiocesano</small></div></div>
+ <div class="dc" style="text-align:center"><small>Relatório gerado automaticamente em ${dm(new Date().toISOString())} por ${esc(ME.nome)} (${esc(ME.role)}).</small></div></div>`)}catch(x){err(x)}}
+function relInit(){const y=new Date().getFullYear();if(!$("#rano").children.length){$("#rano").innerHTML=[y,y-1,y-2].map(v=>`<option>${v}</option>`).join("");$("#rmes").innerHTML='<option value="">Ano inteiro</option>'+MES.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("")}}
+function fase3(){
+ if(tab==="gal"||tab==="bib"){if(!galLoaded){galLoaded=true;galLoad()}else drawGal()}
+ if(tab==="insc"){const id=$("#act").value;if(id!==presId){presId=id;presLoad()}}
+ if(tab==="form")formDraw();
+ if(tab==="rel")relInit();
+}
+$("#act").addEventListener("change",()=>{presId="";fase3()});
+$("#fgal").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),file=f.get("foto");try{await call("galeriaAdd",{titulo:f.get("titulo"),thumb:await small(file,320),full:await small(file,1280)});e.target.reset();await galLoad()}catch(x){err(x)}};
+$("#fbib").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),file=f.get("pdf");if(!file||file.size>4e6){err("O PDF deve ter no máximo 4 MB.");return}try{await call("bibAdd",{titulo:f.get("titulo"),cat:f.get("cat"),nome:file.name,pdf:(await rd(file)).replace(/^data:[^;]*;/,"data:application/pdf;")});e.target.reset();await galLoad()}catch(x){err(x)}};
+$("#fnt").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),g=[];for(let i=0;i<9;i++)g.push(f.get("g"+i));try{const r=await call("notas",{codigo:f.get("codigo"),g,conclusao:f.get("conclusao")});e.target.reset();await load();draw();alert("Média final: "+r.media+(r.aprovado?" — Aprovado. Aguarda a autorização do administrador ou do coordenador arquidiocesano.":" — Reprovado (mínimo "+D.cfg.min+")."))}catch(x){err(x)}};
+$("#frl").onsubmit=e=>{e.preventDefault();relatorio(Object.fromEntries(new FormData(e.target)))};
+document.addEventListener("click",async e=>{const d=e.target.dataset;
+ try{
+ if(d.gi){const u=await call("galeriaImg",{id:d.gi});doc(`<div style="text-align:center"><img src="${u}" alt="" style="max-width:100%"></div>`)}
+ if(d.gd&&confirm("Apagar esta foto?")){await call("galeriaDel",{id:d.gd});await galLoad()}
+ if(d.bo)bibOpen(d.bo,false);
+ if(d.bd)bibOpen(d.bd,true,d.nm);
+ if(d.bx&&confirm("Apagar este documento?")){await call("bibDel",{id:d.bx});await galLoad()}
+ if(d.fa||d.fr){if(confirm(d.fa?"Autorizar a emissão deste certificado?":"Rejeitar este registo?")){await call("autorizar",{id:d.fa||d.fr,acao:d.fa?"autorizar":"rejeitar"});await load();draw()}}
+ if(d.fc)certificado(d.fc);
+ if(d.pr)presLoad();
+ }catch(x){err(x)}
+});
+const _draw=draw;draw=function(){_draw();home();prog();lit();fase3()};
+
+/* ===== Actualização: perfis, assinaturas, presença, liturgia, evangelho ===== */
+let COORD=null,SIGS=[];
+const isM=()=>!!ME&&ME.role==="Membro";
+async function coordInfo(){if(!COORD){try{COORD=await call("coord")}catch(e){}if(!COORD||!COORD.img)COORD={nome:"Américo Tomás Candundo",img:SIGC}}return COORD}
+$("#rc").onchange=()=>{const m=$("#rc").value==="Membro";$("#rg").hidden=m;$("#rm").hidden=!m};
+
+ficha=async function(c){try{const r=await call("ficha",{codigo:c}),m=r.m,C=await coordInfo();
+ doc(`<div class="a4">${head("FICHA DE ACÓLITO")}
+ <div class="top"><div class="ph">${r.foto?`<img src="${r.foto}" alt="Fotografia">`:"Fotografia"}</div><div><div class="lb">Nº de membro</div><div class="n">${esc(m["Código"])}</div><h2>${esc(m["Nome"])}</h2></div></div>
+ <div class="tb">${row("Data de nascimento",dm(m["Nascimento"])+" ("+idade(m["Nascimento"])+" anos)")}${row("Género",m["Género"])}${row("Contacto",m["Contacto"])}${row("Tipo de membro",m["Tipo"])}${row("Vigararia",m["Vigararia"])}${row("Paróquia",m["Paróquia"])}${row("Data de ingresso no grupo",dm(m["Ingresso"]))}${row("Sacramentos",m["Sacramentos"])}</div>
+ <p class="dc">Declara-se que o(a) acólito(a) acima identificado(a) é membro da Associação Arquidiocesana de Acólitos do Huambo.</p>
+ <div class="ft">${qrBlock()}<div class="sg"><small>Emitida em ${dm(new Date().toISOString())}</small><img class="sig" src="${C.img}" alt="Assinatura"><div class="ln"></div><b>${esc(C.nome)}</b><small>Coordenador Arquidiocesano</small></div></div></div>`);mkqr(r.qr)}catch(x){err(x)}};
+
+certificado=async function(id){try{const r=await call("certificado",{id}),c=r.c,T=D.cfg.T,P=D.cfg.P,m=Math.round(Number(c["Média"])),C=await coordInfo();
+ const nt=(t,ns,k)=>`<table class="nt"><tr><th colspan="2">${t}</th></tr>${ns.map((n,i)=>`<tr><td>${esc(n)}</td><td>${Number(c[k+(i+1)])}</td></tr>`).join("")}</table>`;
+ doc(`<div class="a4">${head("CERTIFICADO DE FORMAÇÃO DE ACÓLITOS")}
+ <p class="dc">Certificamos que <b>${esc(c["Nome"])}</b>, membro nº <b>${esc(c["Código"])}</b>, da paróquia ${esc(c["Paróquia"])} (Vigararia ${esc(c["Vigararia"])}), concluiu em ${dm(c["Conclusão"])} a formação de acólitos, nas suas fases teórica e prática, com a média final de <b>${m}</b> valores (escala de 0 a 20), tendo sido considerado(a) <b>APROVADO(A)</b>.</p>
+ <div class="nts">${nt("Fase teórica",T,"T")}${nt("Fase prática",P,"P")}</div><div class="mf">Média final: <b>${m}</b> / 20</div>
+ <div class="mans"><div><div class="ln"></div><small>Pároco / Reitor</small></div><div><div class="ln"></div><small>Coordenador Paroquial</small></div></div>
+ <div class="ft">${qrBlock()}<div class="sg"><small>Certificado Nº ${esc(c["Certificado"])}</small><img class="sig" src="${C.img}" alt="Assinatura"><div class="ln"></div><b>${esc(C.nome)}</b><small>Coordenador Arquidiocesano</small></div></div></div>`);mkqr(r.qr)}catch(x){err(x)}};
+
+relatorio=async function(a){try{const r=await call("relatorio",a),C=await coordInfo();
+ const sg=g=>g.img?`<div><img class="sig" src="${g.img}" alt="Assinatura"><div class="ln"></div><b>${esc(g.nome)}</b><small>${esc(g.cargo)}</small></div>`:`<div><div class="ln"></div><small>${esc(g.cargo)}</small></div>`;
+ doc(`<div class="a4">${head(r.titulo)}<div class="dc" style="text-align:center">${esc(r.ambito)} · Período: ${esc(r.periodo)}</div>
+ <div class="kp">${r.kpis.map(k=>`<div><b>${esc(k[1])}</b><small>${esc(k[0])}</small></div>`).join("")}</div>
+ ${r.tabelas.map(t=>`<h4>${esc(t.h)}</h4><table class="nt"><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>${t.rows.map(x=>`<tr>${x.map(v=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")||`<tr><td colspan="${t.cols.length}">Sem dados.</td></tr>`}</table>`).join("")}
+ <div class="mans" style="margin-top:auto;flex-wrap:wrap">${r.sigs.map(sg).join("")}<div><img class="sig" src="${C.img}" alt="Assinatura"><div class="ln"></div><b>${esc(C.nome)}</b><small>Coordenador Arquidiocesano</small></div></div>
+ <div class="dc" style="text-align:center"><small>Relatório gerado automaticamente em ${dm(new Date().toISOString())} por ${esc(ME.nome)} (${esc(ME.role)}).</small></div></div>`)}catch(x){err(x)}};
+async function relSigs(){try{SIGS=await call("assinaturas")}catch(e){SIGS=[]}
+ $("#rsg").innerHTML='<legend>Assinam o relatório (além do coordenador arquidiocesano)</legend><small>Sem escolha: assina o responsável da área (tesoureiro ou secretário).</small>'+SIGS.filter(s=>s.cargo!=="Coordenador Arquidiocesano").map(s=>`<label><input type="checkbox" name="sg" value="${esc(s.cargo)}"> ${esc(s.cargo)} — ${esc(s.nome)}</label>`).join("")}
+relInit=function(){const y=new Date().getFullYear();if(!$("#rano").children.length){$("#rano").innerHTML=[y,y-1,y-2].map(v=>`<option>${v}</option>`).join("");$("#rmes").innerHTML='<option value="">Ano inteiro</option>'+MES.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("")}if(!relInit.done){relInit.done=true;relSigs()}};
+$("#frl").onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),o=Object.fromEntries(f);o.sigs=f.getAll("sg");delete o.sg;relatorio(o)};
+
+async function sigList(){try{SIGS=await call("assinaturas");$("#lsg").innerHTML=SIGS.map(s=>`<li><div>${esc(s.cargo)}<small>${esc(s.nome)}</small></div><button class="x" data-sd="${esc(s.cargo)}">Remover</button></li>`).join("")||'<li class="mute">Nenhuma assinatura registada.</li>'}catch(x){err(x)}}
+$("#fs").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);try{await call("assinatura",{cargo:f.get("cargo"),nome:f.get("nome"),img:await pngSmall(f.get("img"))});e.target.reset();COORD=null;relInit.done=false;await sigList();alert("Assinatura guardada.")}catch(x){err(x)}};
+
+presLoad=async function(){const id=$("#act").value;if(!id){$("#pres").innerHTML="";return}
+ try{const r=await call("presencas",{id}),ins=D.I.filter(i=>i["ID actividade"]===id),pres=new Set(r.lista.map(p=>p.c)),falta=ins.filter(i=>!pres.has(i["Código"]));
+ $("#pres").innerHTML=`<b>Presença por QR</b>
+ <div class="ln2"><span>Estado: <b>${r.aberta?"ABERTA":"FECHADA"}</b></span><button class="${r.aberta?"x":"p"}" data-pa="${r.aberta?0:1}">${r.aberta?"Fechar presenças":"Abrir presenças"}</button></div>
+ <small>Abra as presenças só durante a actividade: com elas fechadas, o QR não regista ninguém. O membro lê o código, escreve o seu código de membro e a data de nascimento, só pode marcar uma vez e só no dia da actividade.</small>
+ <div id="qrp" style="background:#fff;padding:8px;width:max-content;margin:0 auto"></div>
+ <div class="ln2"><small>${r.lista.length} presentes · ${ins.length} inscritos</small><button class="x" data-pr="1">Actualizar</button></div>
+ ${r.lista.map(p=>`<div class="ln2"><span>${esc(p.n)} <small>${esc(p.c)} · ${esc(p.m)}</small></span><button class="x" data-pm="${esc(p.c)}" data-pj="remover">Retirar</button></div>`).join("")}
+ ${falta.length?"<b>Inscritos ainda sem presença</b>"+falta.map(i=>`<div class="ln2"><span>${esc(i["Nome"])} <small>${esc(i["Código"])}</small></span><button class="p" data-pm="${esc(i["Código"])}" data-pj="marcar">Marcar presente</button></div>`).join(""):""}`;
+ try{new QRCode($("#qrp"),{text:r.url,width:160,height:160})}catch(e){$("#qrp").textContent=r.url}}catch(x){err(x)}};
+
+lit=function(){
+ const y0=new Date().getFullYear(),ly=$("#ly"),adm=ME.role==="Administrador";
+ if(!ly.children.length){ly.innerHTML=[y0-1,y0,y0+1].map(y=>`<option>${y}</option>`).join("");ly.value=y0;$("#lm2").innerHTML='<option value="">Todos os meses</option>'+MES.map((m,i)=>`<option value="${pad2(i+1)}">${m}</option>`).join("");$("#lm2").value=pad2(new Date().getMonth()+1);$("#lt2").innerHTML='<option value="">Todos os tempos</option>'+["Advento","Natal","Tempo Comum","Quaresma","Tríduo Pascal","Tempo Pascal"].map(t=>`<option>${t}</option>`).join("")}
+ $("#flt").hidden=!adm;
+ const y=ly.value,m=$("#lm2").value,t=$("#lt2").value,ds=x=>String(x["Data"]).slice(0,10);
+ const L=D.Lit.filter(x=>ds(x).slice(0,4)===y&&(!m||ds(x).slice(5,7)===m)&&(!t||x["Tempo"]===t)).sort((a,b)=>ds(a)<ds(b)?-1:ds(a)>ds(b)?1:(a["Tipo"]==="Início de tempo"?-1:b["Tipo"]==="Início de tempo"?1:0));
+ $("#ll").innerHTML=L.map(x=>x["Tipo"]==="Início de tempo"?`<li style="background:${COR[x["Cor"]]||"#999"};color:${x["Cor"]==="Branco"?"#111":"#fff"}"><div><b>${dm(x["Data"])} · ${esc(x["Celebração"])}</b></div></li>`:`<li><div><span class="cor" style="background:${COR[x["Cor"]]||"#999"}"></span> <b>${dm(x["Data"])}</b> ${esc(x["Celebração"])}<small>${esc(x["Tipo"]||"")}${x["Tempo"]?" · "+esc(x["Tempo"]):""} · cor ${esc(x["Cor"])}</small></div>${adm?`<button class="x" data-ld="${x.ID}">Apagar</button>`:""}</li>`).join("")||'<li class="mute">Sem celebrações neste período.'+(adm?" Use «Gerar o ano litúrgico completo».":"")+"</li>";
+};
+$("#ly").onchange=$("#lm2").onchange=$("#lt2").onchange=()=>lit();
+$("#gl").onclick=async()=>{const y=$("#ly").value;if(!confirm("Gerar o ano litúrgico completo de "+y+"? As celebrações de "+y+" serão substituídas (incluindo as que adicionou à mão)."))return;try{const n=await call("gerarLit",{ano:y});await load();draw();alert(n+" entradas geradas. Confira com o calendário oficial da Igreja em Angola e corrija o que for preciso.")}catch(x){err(x)}};
+
+home=function(){
+ const h=new Date(),h0=new Date(h.getFullYear(),h.getMonth(),h.getDate()),dias=d=>Math.round((new Date(String(d).slice(0,10)+"T00:00")-h0)/864e5);
+ const cd=n=>n===0?"Hoje":n===1?"Amanhã":`Faltam ${n} dias`;
+ const pr=D.A.filter(a=>a["Data"]&&dias(a["Data"])>=0).sort((a,b)=>String(a["Data"])<String(b["Data"])?-1:1);
+ const sem=pr.filter(a=>dias(a["Data"])<=7),mes=pad2(h.getMonth()+1);
+ const an=isM()?[]:D.M.filter(m=>String(m["Nascimento"]).slice(5,7)===mes).sort((a,b)=>String(a["Nascimento"]).slice(8,10)-String(b["Nascimento"]).slice(8,10));
+ const at=D.atr||[],H=D.hoje||{},ev=`https://www.vaticannews.va/pt/palavra-do-dia/${h.getFullYear()}/${pad2(h.getMonth()+1)}/${pad2(h.getDate())}.html`;
+ $("#s-inicio").innerHTML=`<div class="hero" style="background-image:url('${IMG.s}')"><div class="lg"><img class="l" src="${LOGO}" alt="Logotipo"><img class="b" src="${IMG.b}" alt="Brasão da Arquidiocese"></div><h2>Arquidiocese do Huambo<br>Associação Arquidiocesana de Acólitos</h2></div>
+ ${IMG.b?"":`<div class="box al"><small>As imagens da página inicial não foram carregadas. Confirme que os ficheiros Brasao, Se e Arcebispo têm o conteúdo completo.</small></div>`}
+ <div class="box arc"><img src="${IMG.a||""}" alt="Arcebispo"><div><small>Arcebispo Metropolita do Huambo</small><br><b>Dom Zeferino Zeca Martins</b></div></div>
+ <div class="box"><b>📖 Hoje na liturgia</b><div class="ln2"><span>${esc(H.celebracao||("Dia do "+(H.tempo||"ano litúrgico")))}</span><span class="cor" style="background:${COR[H.cor]||"#999"}"></span></div><small>${esc(H.tempo||"")}${H.tipo?" · "+esc(H.tipo):""}${H.cor?" · cor "+esc(H.cor):""}</small><a class="lk" href="${ev}" target="_blank" rel="noopener">Ler o Evangelho do dia</a></div>
+ ${sem.length?`<div class="box al"><b>⏰ Actividades desta semana</b>${sem.map(a=>`<div class="ln2"><span>${esc(a["Título"])} — ${dm(a["Data"])}${a["Local"]?" · "+esc(a["Local"]):""}</span><b>${cd(dias(a["Data"]))}</b></div>`).join("")}</div>`:""}
+ <div class="box"><b>Próxima actividade</b>${pr.length?`<div class="ln2"><span>${esc(pr[0]["Título"])} — ${dm(pr[0]["Data"])}</span><b>${cd(dias(pr[0]["Data"]))}</b></div>`:'<small>Sem actividades marcadas.</small>'}</div>
+ ${isM()?"":`<div class="box"><b>🎂 Aniversariantes de ${MES[h.getMonth()]}</b>${an.length?an.map(m=>`<div class="ln2"><span>${esc(m["Nome"])}</span><b>${String(m["Nascimento"]).slice(8,10)}/${mes}</b></div>`).join(""):'<small>Nenhum aniversariante este mês.</small>'}</div>
+ <div class="box ${at.length?"al":""}"><b>💰 Quotas em atraso (${at.length})</b>${at.length?at.slice(0,40).map(x=>`<div class="ln2"><span>${esc(x.nome)}<small> · ${x.tipo}</small></span><b>${x.meses.length} ${x.meses.length>1?"meses":"mês"}</b></div><small>${x.meses.join(", ")}</small>`).join(""):'<small>Sem quotas em atraso.</small>'}</div>`}`;
+};
+
+const _setup=setup;setup=function(){_setup();
+ if(isM()){const keep=["inicio","membros","prog","lit","gal","bib","form"];[...$("#tabs").children].forEach(b=>{if(!keep.includes(b.dataset.k))b.remove();else if(b.dataset.k==="membros")b.textContent="O meu cadastro"})}};
+const _fase3=fase3;fase3=function(){_fase3();if(tab==="quotas"&&ME.role==="Administrador"&&!sigList.done){sigList.done=true;sigList()}};
+const _d2=draw;draw=function(){_d2();if(isM()){$("#fm").hidden=true;$("#fnt").hidden=true;$("#q").hidden=true}};
+document.addEventListener("click",async e=>{const d=e.target.dataset;try{
+ if(d.sd&&confirm("Remover esta assinatura?")){await call("assinaturaDel",{cargo:d.sd});COORD=null;relInit.done=false;await sigList()}
+ if(d.pa!==undefined){await call("presAbrir",{id:$("#act").value,aberta:d.pa==="1"});presLoad()}
+ if(d.pm){await call("presManual",{id:$("#act").value,codigo:d.pm,acao:d.pj});presLoad()}
+}catch(x){err(x)}});
+let ACC=null;
+async function accLoad(){try{ACC=await call("acessos");accDraw()}catch(x){err(x)}}
+function accDraw(){
+ const vs=[...new Set(D.pars.map(p=>p.v))],po=(v,sel)=>'<option value="">— paróquia —</option>'+D.pars.filter(p=>p.v===v).map(p=>`<option${p.p===sel?" selected":""}>${esc(p.p)}</option>`).join("");
+ $("#lac").innerHTML=ACC.lista.map((u,i)=>`<li style="flex-wrap:wrap"><div>${esc(u.n)}<small>${esc(u.u)}${u.k?" · "+esc(u.k):""}</small></div><div class="row" style="width:100%"><select data-f="c">${ACC.roles.map(r=>`<option${r===u.c?" selected":""}>${esc(r)}</option>`).join("")}</select><select data-f="e">${["Activo","Pendente","Bloqueado"].map(r=>`<option${r===u.e?" selected":""}>${r}</option>`).join("")}</select><select data-f="v"><option value="">— vigararia —</option>${vs.map(v=>`<option${v===u.v?" selected":""}>${esc(v)}</option>`).join("")}</select><select data-f="p">${po(u.v,u.p)}</select></div><button class="p" data-acs="${i}">Guardar</button></li>`).join("")||'<li class="mute">Sem utilizadores.</li>';
+}
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.f==="v"){const p=t.closest("li").querySelector('[data-f="p"]');p.innerHTML='<option value="">— paróquia —</option>'+D.pars.filter(x=>x.v===t.value).map(x=>`<option>${esc(x.p)}</option>`).join("")}});
+document.addEventListener("click",async e=>{const d=e.target.dataset;if(d.acs===undefined)return;try{
+ const li=e.target.closest("li"),g=f=>li.querySelector('[data-f="'+f+'"]').value,u=ACC.lista[+d.acs].u;
+ await call("acessoSet",{u,c:g("c"),e:g("e"),v:g("v"),p:g("p")});alert("Acesso guardado. Vale a partir do próximo login dessa pessoa.");await accLoad()}catch(x){err(x)}});
+const _fase4=fase3;fase3=function(){_fase4();const a=$("#s-acs");if(a){a.hidden=tab!=="acs";if(tab==="acs"&&!ACC)accLoad()}};
+const _setup4=setup;setup=function(){_setup4();if(ME.role==="Administrador"){const b=document.createElement("button");b.dataset.k="acs";b.textContent="Acessos";if(tab==="acs")b.className="on";$("#tabs").appendChild(b)}};
+$("#err").textContent="";
+
+if("serviceWorker" in navigator&&window.addEventListener)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+if(window.addEventListener)window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();const b=document.createElement("button");b.textContent="📲 Instalar app";b.style.cssText="position:fixed;right:12px;bottom:12px;z-index:50;padding:10px 14px;border:0;border-radius:24px;background:#9b1c2e;color:#fff;font:inherit;box-shadow:0 2px 8px #0005";b.onclick=()=>{b.remove();e.prompt()};document.body.appendChild(b)});
+</script></body></html>
