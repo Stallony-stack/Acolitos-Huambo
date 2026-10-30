@@ -56,7 +56,19 @@ fieldset{border:1px solid var(--line);border-radius:6px;display:flex;flex-wrap:w
 .mf{text-align:center;font-size:14pt;margin:8px 0;color:#111}.mans{display:flex;gap:24px;margin:26px 0 8px}.mans>div{flex:1;text-align:center;color:#111}
 .kp{display:flex;gap:8px;margin:10px 0}.kp>div{flex:1;border:1px solid #bbb;padding:8px;text-align:center;color:#111}.kp b{display:block;font-size:13pt;color:#9b1c2e}.a4 h4{margin:12px 0 4px;color:#111}
 .lk{display:block;text-align:center;text-decoration:none;padding:10px;border-radius:6px;background:var(--ac);color:var(--bg);font-weight:700}
+
+#bgfx{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg)}
+#bgfx:after{content:"";position:absolute;inset:0;background:var(--bg);opacity:.85}
+.bgs{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;animation:bgf 24s infinite;will-change:opacity,transform}.bgs.ct{background-size:contain}
+@media(prefers-reduced-motion:reduce){.bgs{animation:none!important}.bgs:first-child{opacity:1}}
+@media print{#bgfx{display:none}}
+.pg{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:2px 0 10px}.pg i{display:block;height:100%;background:var(--ac)}
+.ch{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer;margin:0 6px 6px 0}.ch.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+h3.cat{margin:14px 0 6px;font-size:1.05rem}#qb{margin-bottom:8px}
+.wa{background:#25d366;color:#06361b;border:0;border-radius:6px;padding:5px 10px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.bday{border-color:#d4a017;background:linear-gradient(var(--card),var(--card))}
 </style><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script></head><body>
+<div id="bgfx" aria-hidden="true"></div>
 <header><h1>Associação de Acólitos do Huambo</h1><div class="mute" id="who">Arquidiocese do Huambo</div></header>
 <div id="err" role="alert" style="max-width:760px;margin:0 auto;padding:0 16px">A carregar… Se esta mensagem não desaparecer, há um erro num dos ficheiros do app (Logo, Assinatura, Brasao, Se ou Arcebispo).</div>
 
@@ -80,8 +92,8 @@ fieldset{border:1px solid var(--line);border-radius:6px;display:flex;flex-wrap:w
 <form onsubmit="return false" id="flt" hidden><b>Calendário litúrgico (só o administrador)</b><div class="row"><input name="data" type="date" required><select name="cor"><option>Branco</option><option>Verde</option><option>Roxo</option><option>Vermelho</option><option>Rosa</option></select></div><input name="cel" placeholder="Celebração (ex.: festa do padroeiro)" required><select name="tipo"><option>Celebração</option><option>Solenidade</option><option>Festa</option><option>Memória</option><option>Dia especial</option></select><button class="p">Adicionar</button><button type="button" class="x" id="gl">Gerar o ano litúrgico completo</button></form>
 <ul id="ll"></ul>
 </section>
-<section id="s-gal" hidden><form onsubmit="return false" id="fgal" hidden><b>Adicionar foto (só o administrador)</b><input name="titulo" placeholder="Título / actividade" required><input name="foto" type="file" accept="image/*" required><button class="p">Adicionar foto</button></form><div class="gal" id="gg"></div></section>
-<section id="s-bib" hidden><form onsubmit="return false" id="fbib" hidden><b>Adicionar PDF (só o administrador)</b><input name="titulo" placeholder="Título" required><input name="cat" placeholder="Categoria (ex.: Formação, Estatutos)"><input name="pdf" type="file" accept="application/pdf" required><small>Máximo 4 MB por ficheiro.</small><button class="p">Adicionar PDF</button></form><ul id="lbib"></ul></section>
+<section id="s-gal" hidden><form onsubmit="return false" id="fgal" hidden><b>Adicionar foto (só o administrador)</b><input name="titulo" placeholder="Título / actividade" required><input name="foto" type="file" accept="image/*" multiple required><small>Pode escolher várias fotos de uma vez (até 12). Só imagens: JPG, PNG ou WebP.</small><button class="p">Adicionar fotos</button></form><div class="gal" id="gg"></div></section>
+<section id="s-bib" hidden><form onsubmit="return false" id="fbib" hidden><b>Adicionar PDF (só o administrador)</b><input name="titulo" placeholder="Título" required><input name="cat" list="dcat" placeholder="Categoria (ex.: Formação, Estatutos, Liturgia)"><datalist id="dcat"></datalist><input name="pdf" type="file" accept="application/pdf" required><small>Máximo 4 MB por ficheiro.</small><button class="p">Adicionar PDF</button></form><input id="qb" type="search" placeholder="🔎 Procurar livro por título ou categoria" autocomplete="off"><div id="cb"></div><div id="lbib"></div></section>
 <section id="s-form" hidden><form onsubmit="return false" id="fnt"><b>Registar notas da formação</b><select id="fmm" name="codigo" required></select><div id="fng" class="row"></div><label>Data de conclusão<input name="conclusao" type="date" required></label><small>Média final = soma das 9 notas ÷ 9, arredondada ao número inteiro. Aprovação a partir de <span id="fmin">10</span> valores. Depois de guardado, o certificado aguarda a autorização do administrador ou do coordenador arquidiocesano.</small><button class="p">Guardar notas</button></form><ul id="lfo"></ul></section>
 <section id="s-acs" hidden><b>Acessos e perfis</b><small>Defina o cargo, o estado e o âmbito de cada pessoa. As alterações aplicam-se no próximo login dessa pessoa.</small><ul id="lac"></ul></section>
 <section id="s-rel" hidden><form onsubmit="return false" id="frl"><b>Relatório automático</b><select name="tipo"><option value="membros">Membros</option><option value="quotas">Quotas</option><option value="actividades">Actividades</option><option value="formacao">Formação</option></select><div class="row"><select name="ano" id="rano"></select><select name="mes" id="rmes"></select></div><fieldset id="rsg"></fieldset><button class="p">Gerar relatório</button></form></section>
@@ -122,14 +134,13 @@ fieldset{border:1px solid var(--line);border-radius:6px;display:flex;flex-wrap:w
 <script src="imgs.js"></script>
 <script>window.onerror=function(m,u,l){var e=document.getElementById("err");if(e)e.textContent="Erro no app: "+m+" (linha "+l+")"}</script>
 <script>
-// >>> COLE AQUI o URL da sua implantação do Apps Script (termina em /exec)
 const API_URL="https://script.google.com/macros/s/AKfycbxbZsQXmMGzkE8u3nKRd4Fg2wc9-PHwH6qVRf5X7Iyd1J8fXRjA3v_v-_k2OFj9uHc/exec";
 const LOGO=IMGS.logo,IMG={b:IMGS.b,s:IMGS.s,a:IMGS.a};let SIGC="";
 const APROV=["Administrador","Tesoureiro","Coordenador arquidiocesano","Secretário"];
 const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let T=null,ME=null,D={pars:[],M:[],Q:[],A:[],I:[],Prog:[],Lit:[],atr:[],F:[],cfg:{T:[],P:[],min:10},hoje:{}},tab="inicio";
 const rpc=async body=>{
-  if(API_URL.indexOf("https://")!==0)throw new Error("Falta colar o URL do Apps Script no ficheiro index.html (API_URL).");
+  if(API_URL.indexOf("http")!==0)throw new Error("Falta colar o URL do Apps Script no ficheiro index.html (API_URL).");
   let d;
   try{const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)});d=await r.json()}
   catch(e){throw new Error("Sem ligação ao servidor. Verifique a internet e tente de novo.")}
@@ -409,6 +420,97 @@ document.addEventListener("click",async e=>{const d=e.target.dataset;if(d.acs===
  await call("acessoSet",{u,c:g("c"),e:g("e"),v:g("v"),p:g("p")});alert("Acesso guardado. Vale a partir do próximo login dessa pessoa.");await accLoad()}catch(x){err(x)}});
 const _fase4=fase3;fase3=function(){_fase4();const a=$("#s-acs");if(a){a.hidden=tab!=="acs";if(tab==="acs"&&!ACC)accLoad()}};
 const _setup4=setup;setup=function(){_setup4();if(ME.role==="Administrador"){const b=document.createElement("button");b.dataset.k="acs";b.textContent="Acessos";if(tab==="acs")b.className="on";$("#tabs").appendChild(b)}};
+
+/* ===== Melhorias: fundo animado, contagem de 30 dias, WhatsApp, galeria, biblioteca ===== */
+const NL=String.fromCharCode(10);
+const nz=s=>String(s||"").normalize("NFD").split("").filter(c=>c.charCodeAt(0)<768||c.charCodeAt(0)>879).join("").toLowerCase();
+const mlab=k=>{const p=String(k).split("-");return(MES[+p[1]-1]||p[1])+"/"+p[0]};
+function bgfx(){
+ const L=[];if(IMG.s)L.push({u:IMG.s});if(IMG.b)L.push({u:IMG.b,ct:1});
+ (GAL||[]).slice(0,6).forEach(g=>{if(g.m)L.push({u:g.m})});
+ const el=$("#bgfx");if(!el||!L.length)return;
+ const N=L.length,T=N*8,p=100/N;let st=document.getElementById("bgst");
+ if(!st){st=document.createElement("style");st.id="bgst";document.head.appendChild(st)}
+ st.textContent=`@keyframes bgf{0%{opacity:0;transform:scale(1)}${(p*.12).toFixed(2)}%{opacity:1}${(p*.9).toFixed(2)}%{opacity:1}${(p*1.15).toFixed(2)}%{opacity:0;transform:scale(1.08)}100%{opacity:0}}`;
+ el.innerHTML=L.map((x,i)=>`<div class="bgs${x.ct?" ct":""}" style="background-image:url('${x.u}');animation-duration:${T}s;animation-delay:${i*8}s"></div>`).join("");
+}
+/* WhatsApp: o aviso abre o WhatsApp com a mensagem pronta; a pessoa só toca em «Enviar» (e escolhe o grupo, se for para o grupo). */
+const WA_FIRMA="— Associação Arquidiocesana de Acólitos do Huambo";
+const wnum=t=>{let n=String(t||"").replace(/[^0-9]/g,"");if(n.length===9)n="244"+n;return n};
+const wopen=(tel,txt)=>window.open("https://wa.me/"+wnum(tel)+"?text="+encodeURIComponent(txt),"_blank","noopener");
+async function wfoto(txt,dataUrl,nome){
+ try{const b=await(await fetch(dataUrl)).blob(),f=new File([b],nome+".jpg",{type:"image/jpeg"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text:txt});return}
+ }catch(e){if(e&&e.name==="AbortError")return}
+ const a=document.createElement("a");a.href=dataUrl;a.download=nome+".jpg";document.body.appendChild(a);a.click();a.remove();
+ alert("A foto foi guardada no telemóvel. No WhatsApp, escolha o grupo, anexe a foto e envie.");wopen("",txt)
+}
+const dias0=d=>{const h=new Date();return Math.round((new Date(String(d).slice(0,10)+"T00:00")-new Date(h.getFullYear(),h.getMonth(),h.getDate()))/864e5)};
+const cdTxt=n=>n===0?"Hoje":n===1?"Amanhã":`Faltam ${n} dias`;
+const msgAct=a=>{const n=dias0(a["Data"]);return `📢 *Aviso de actividade*${NL}*${a["Título"]}*${NL}📅 ${dm(a["Data"])}${a["Local"]?NL+"📍 "+a["Local"]:""}${NL}⏳ ${cdTxt(n)}${NL}Contamos com a presença de todos! 🙏${NL}${WA_FIRMA}`};
+const msgAniv=m=>`🎂🎉 *Feliz aniversário, ${m["Nome"]}!* 🎉🎂${NL}A Associação Arquidiocesana de Acólitos do Huambo felicita-o(a) neste dia especial. Que Deus o(a) abençoe e o(a) guarde no serviço ao altar. 🙏${NL}${WA_FIRMA}`;
+const msgAtr=x=>x.tipo==="Individual"
+ ?`Olá ${x.nome}, a paz de Cristo! 🙏${NL}Lembramos que a sua quota está em atraso: ${x.meses.map(mlab).join(", ")}.${NL}Por favor regularize e envie o comprovativo pela app.${NL}${WA_FIRMA}`
+ :`Olá${x.resp?" "+x.resp:""}, a paz de Cristo! 🙏${NL}A quota colectiva da paróquia ${x.nome} está em atraso: ${x.meses.map(mlab).join(", ")}.${NL}Por favor regularize e envie o comprovativo pela app.${NL}${WA_FIRMA}`;
+const msgAtrGrupo=L=>`💰 *Quotas em atraso* (${L.length})${NL}`+L.slice(0,30).map(x=>`• ${x.nome}: ${x.meses.length} ${x.meses.length>1?"meses":"mês"} (${x.meses.map(mlab).join(", ")})`).join(NL)+`${NL}Pedimos a regularização, com envio do comprovativo pela app. 🙏${NL}${WA_FIRMA}`;
+
+home=function(){
+ const h=new Date(),mes=pad2(h.getMonth()+1),dd=pad2(h.getDate()),m_=isM();
+ const pr=D.A.filter(a=>a["Data"]&&dias0(a["Data"])>=0).sort((a,b)=>String(a["Data"])<String(b["Data"])?-1:1);
+ const sem=pr.filter(a=>dias0(a["Data"])<=30);
+ const an=m_?[]:D.M.filter(m=>String(m["Nascimento"]).slice(5,7)===mes).sort((a,b)=>String(a["Nascimento"]).slice(8,10)-String(b["Nascimento"]).slice(8,10));
+ const hojeA=an.filter(m=>String(m["Nascimento"]).slice(8,10)===dd);
+ const at=D.atr||[],H=D.hoje||{},ev=`https://www.vaticannews.va/pt/palavra-do-dia/${h.getFullYear()}/${mes}/${dd}.html`;
+ const btnA=a=>m_?"":` <button class="wa" data-wact="${a.ID}">📲 Avisar</button>`;
+ const linhaA=a=>{const n=dias0(a["Data"]);return `<div class="ln2"><span>${esc(a["Título"])} — ${dm(a["Data"])}${a["Local"]?" · "+esc(a["Local"]):""}</span><span><b>${cdTxt(n)}</b>${btnA(a)}</span></div><div class="pg"><i style="width:${Math.max(4,Math.round((30-n)/30*100))}%"></i></div>`};
+ $("#s-inicio").innerHTML=`<div class="hero" style="background-image:url('${IMG.s}')"><div class="lg"><img class="l" src="${LOGO}" alt="Logotipo"><img class="b" src="${IMG.b}" alt="Brasão da Arquidiocese"></div><h2>Arquidiocese do Huambo<br>Associação Arquidiocesana de Acólitos</h2></div>
+ <div class="box arc"><img src="${IMG.a||""}" alt="Arcebispo"><div><small>Arcebispo Metropolita do Huambo</small><br><b>Dom Zeferino Zeca Martins</b></div></div>
+ ${hojeA.length?`<div class="box bday"><b>🎉 Hoje é aniversário!</b>${hojeA.map(m=>`<div class="ln2"><span>${esc(m["Nome"])}</span><button class="wa" data-wb="${esc(m["Código"])}">🎉 Parabenizar</button></div>`).join("")}</div>`:""}
+ <div class="box"><b>📖 Hoje na liturgia</b><div class="ln2"><span>${esc(H.celebracao||("Dia do "+(H.tempo||"ano litúrgico")))}</span><span class="cor" style="background:${COR[H.cor]||"#999"}"></span></div><small>${esc(H.tempo||"")}${H.tipo?" · "+esc(H.tipo):""}${H.cor?" · cor "+esc(H.cor):""}</small><a class="lk" href="${ev}" target="_blank" rel="noopener">Ler o Evangelho do dia</a></div>
+ <div class="box ${sem.length?"al":""}"><b>⏰ Contagem regressiva — próximos 30 dias</b>${sem.length?sem.map(linhaA).join(""):(pr.length?`<small>Próxima actividade: ${esc(pr[0]["Título"])} — ${dm(pr[0]["Data"])} (${cdTxt(dias0(pr[0]["Data"]))}). A contagem começa 30 dias antes.</small>`:"<small>Sem actividades marcadas.</small>")}</div>
+ ${m_?"":`<div class="box"><b>🎂 Aniversariantes de ${MES[h.getMonth()]}</b>${an.length?an.map(m=>`<div class="ln2"><span>${esc(m["Nome"])}<small> · ${String(m["Nascimento"]).slice(8,10)}/${mes}</small></span><button class="wa" data-wb="${esc(m["Código"])}">🎉</button></div>`).join(""):"<small>Nenhum aniversariante este mês.</small>"}</div>
+ <div class="box ${at.length?"al":""}"><b>💰 Quotas em atraso (${at.length})</b>${at.length?`<div style="margin:6px 0"><button class="wa" data-wg="1">📲 Aviso geral no grupo</button></div>`+at.slice(0,40).map((x,i)=>`<div class="ln2"><span>${esc(x.nome)}<small> · ${x.tipo}</small></span><span><b>${x.meses.length} ${x.meses.length>1?"meses":"mês"}</b> <button class="wa" data-wq="${i}">📲</button></span></div><small>${x.meses.map(mlab).join(", ")}</small>`).join(""):"<small>Sem quotas em atraso.</small>"}</div>`}`;
+};
+
+/* Galeria: só imagens (JPG), várias de uma vez, com opção de descarregar a foto */
+drawGal=function(){
+ const adm=ME.role==="Administrador";$("#fgal").hidden=!adm;$("#fbib").hidden=!adm;
+ $("#gg").innerHTML=GAL.map(g=>`<figure class="gi"><img src="${g.m}" alt="${esc(g.t)}" data-gi="${g.ID}"><figcaption>${esc(g.t)} <button class="x" data-gdl="${g.ID}" data-nm="${esc(g.t)}" title="Descarregar foto">⬇</button>${adm?` <button class="x" data-gd="${g.ID}">Apagar</button>`:""}</figcaption></figure>`).join("")||'<p class="mute">Ainda não há fotos.</p>';
+ drawBib();bgfx();
+};
+$("#fgal").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),fs=f.getAll("foto").filter(x=>x&&x.size).slice(0,12),t=f.get("titulo");if(!fs.length)return;
+ try{for(const file of fs){const th=await small(file,320),fu=await small(file,1280);if(!th||!fu)throw new Error("«"+file.name+"» não é uma imagem. Na galeria só são aceites fotos (JPG, PNG ou WebP).");await call("galeriaAdd",{titulo:t,thumb:th,full:fu})}
+  e.target.reset();await galLoad();alert(fs.length+(fs.length>1?" fotos adicionadas.":" foto adicionada."))}catch(x){err(x)}};
+
+/* Biblioteca: por categorias, com barra de pesquisa */
+let BQ="",BC="";
+function drawBib(){
+ const adm=ME.role==="Administrador",SC="Sem categoria",cat=b=>b.c||SC;
+ const cats=[...new Set(BIB.map(cat))].sort((a,b)=>a===SC?1:b===SC?-1:a.localeCompare(b,"pt"));
+ $("#dcat").innerHTML=cats.filter(c=>c!==SC).map(c=>`<option value="${esc(c)}">`).join("");
+ $("#cb").innerHTML=BIB.length?`<button class="ch${BC?"":" on"}" data-bcat="">Todas (${BIB.length})</button>`+cats.map(c=>`<button class="ch${BC===c?" on":""}" data-bcat="${esc(c)}">${esc(c)} (${BIB.filter(b=>cat(b)===c).length})</button>`).join(""):"";
+ const q=nz(BQ),L=BIB.filter(b=>(!BC||cat(b)===BC)&&(!q||nz(b.t+" "+(b.c||"")+" "+(b.n||"")).includes(q))),g={};
+ L.forEach(b=>{(g[cat(b)]=g[cat(b)]||[]).push(b)});
+ $("#lbib").innerHTML=Object.keys(g).sort((a,b)=>a===SC?1:b===SC?-1:a.localeCompare(b,"pt")).map(c=>`<h3 class="cat">📚 ${esc(c)} <small>(${g[c].length})</small></h3><ul>${g[c].sort((a,b)=>String(a.t).localeCompare(String(b.t),"pt")).map(b=>`<li><div>${esc(b.t)}<small>${dm(b.d)}</small></div><div><button class="p" data-bo="${b.ID}">Abrir</button> <button class="x" data-bd="${b.ID}" data-nm="${esc(b.n)}">Baixar</button>${adm?` <button class="x" data-bc="${b.ID}">Categoria</button> <button class="x" data-bx="${b.ID}">Apagar</button>`:""}</div></li>`).join("")}</ul>`).join("")||`<p class="mute">${BIB.length?"Nenhum livro encontrado para «"+esc(BQ)+"».":"Ainda não há documentos."}</p>`;
+}
+$("#qb").oninput=e=>{BQ=e.target.value;drawBib()};
+
+document.addEventListener("click",async e=>{const b=e.target.closest("button"),d=b?b.dataset:{};if(!b)return;
+ try{
+  if(d.bcat!==undefined){BC=d.bcat;drawBib()}
+  if(d.bc){const x=BIB.find(y=>y.ID===d.bc);const c=prompt("Categoria deste livro (deixe vazio para «Sem categoria»):",x&&x.c||"");if(c!==null){await call("bibEdit",{id:d.bc,titulo:x&&x.t,cat:c.trim()});await galLoad()}}
+  if(d.gdl){const u=await call("galeriaImg",{id:d.gdl}),a=document.createElement("a");a.href=URL.createObjectURL(await(await fetch(u)).blob());a.download=(d.nm||"foto").replace(/[^A-Za-z0-9 -]+/g,"").trim()+".jpg";document.body.appendChild(a);a.click();a.remove()}
+  if(d.wact){const a=D.A.find(x=>x.ID===d.wact);if(a)wopen("",msgAct(a))}
+  if(d.wg)wopen("",msgAtrGrupo(D.atr||[]));
+  if(d.wq!==undefined){const x=(D.atr||[])[+d.wq];if(x)wopen(x.tel,msgAtr(x))}
+  if(d.wb){const m=D.M.find(x=>x["Código"]===d.wb);if(m){const t=msgAniv(m);let r=null;try{r=await call("ficha",{codigo:m["Código"]})}catch(_){}
+   if(r&&r.foto)await wfoto(t,r.foto,"Parabens-"+m["Código"]);else wopen("",t)}}
+ }catch(x){err(x)}
+});
+const _setupG=setup;setup=function(){_setupG();if(!window.__bg){window.__bg=1;call("galeria").then(g=>{GAL=g;bgfx()}).catch(()=>{})}};
+$("#tabs").addEventListener("click",()=>{$("#err").textContent=""});
+bgfx();
+
 $("#err").textContent="";
 
 if("serviceWorker" in navigator&&window.addEventListener)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
